@@ -45,7 +45,7 @@ app.get('/', (req, res) => {
         <p>Version: ${process.env.APP_VERSION || '2.0'} - Mise à jour automatique !</p>
         <p>Déployé automatiquement depuis GitHub !</p>
         <p>Timestamp: ${new Date().toISOString()}</p>
-        <p>Nombre de visites: ${visitCount}</p>
+        <p style="color: blue; font-weight: bold;">Nombre de visites: ${visitCount}</p>
         <p style="color: green;">✅ CI/CD fonctionne parfaitement !</p>
         <hr>
         <h2>Endpoints disponibles:</h2>
