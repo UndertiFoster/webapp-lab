@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
@@ -10,7 +9,7 @@ app.get('/', (req, res) => {
       <head><title>Azure App Service Lab</title></head>
       <body style="font-family: Arial; text-align: center; padding: 50px; background: #f0f8ff;">
         <h1>🚀 Azure App Service + GitHub Lab</h1>
-        <p>Version: 2.0 - Mise à jour automatique !</p>
+        <p>Version: ${process.env.APP_VERSION || '2.0'} - Mise à jour automatique !</p>
         <p>Déployé automatiquement depuis GitHub !</p>
         <p>Timestamp: ${new Date().toISOString()}</p>
         <p style="color: green;">✅ CI/CD fonctionne parfaitement !</p>
@@ -31,18 +30,21 @@ app.get('/health', (req, res) => {
     status: 'OK',
     timestamp: new Date().toISOString(),
     uptime: process.uptime(),
-    version: '2.0'
+    version: process.env.APP_VERSION || '2.0'
   });
 });
 
-// Endpoint d'info
+// Endpoint d'info enrichi
 app.get('/api/info', (req, res) => {
   res.json({
     app: 'webapp-lab',
-    version: '2.0',
+    version: process.env.APP_VERSION || '2.0',
     platform: process.platform,
     nodeVersion: process.version,
-    environment: process.env.NODE_ENV || 'development'
+    environment: process.env.NODE_ENV || 'development',
+    customMessage: process.env.CUSTOM_MESSAGE || 'No custom message',
+    azureRegion: process.env.REGION_NAME || 'unknown',
+    instanceId: process.env.WEBSITE_INSTANCE_ID || 'local-dev'
   });
 });
 
@@ -50,51 +52,3 @@ app.get('/api/info', (req, res) => {
 app.listen(port, () => {
   console.log(`✅ Server running on port ${port}`);
 });
-=======
-const express = require('express');
-const app = express();
-const port = process.env.PORT || 3000;
-
-app.get('/', (req, res) => {
-  res.send(`
-    <html>
-      <head><title>Azure App Service Lab</title></head>
-      <body style="font-family: Arial; text-align: center; padding: 50px;">
-        <h1>🚀 Azure App Service + GitHub Lab</h1>
-        <p>Version: 1.0</p>
-        <p>Déployé automatiquement depuis GitHub !</p>
-        <p>Timestamp: ${new Date().toISOString()}</p>
-        <hr>
-        <h2>Endpoints disponibles:</h2>
-        <ul style="list-style: none;">
-          <li><a href="/health">📊 /health</a></li>
-          <li><a href="/api/info">ℹ️ /api/info</a></li>
-        </ul>
-      </body>
-    </html>
-  `);
-});
-
-app.get('/health', (req, res) => {
-  res.json({
-    status: 'OK',
-    timestamp: new Date().toISOString(),
-    uptime: process.uptime(),
-    version: '1.0'
-  });
-});
-
-app.get('/api/info', (req, res) => {
-  res.json({
-    app: 'webapp-lab',
-    version: '1.0',
-    platform: process.platform,
-    nodeVersion: process.version,
-    environment: process.env.NODE_ENV || 'development'
-  });
-});
-
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-});
->>>>>>> 44123b471511c8fb383b319d9ee2ddd15c343c1c
